@@ -3,10 +3,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
 import 'package:kleen/data/model/response/error_response.dart';
-
 import 'package:kleen/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
@@ -42,6 +42,78 @@ class ApiClient extends GetxService {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       Http.Response _response = await Http.get(
+        Uri.parse(appBaseUrl + uri),
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> postData(String uri, dynamic body,
+      {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      debugPrint('====> API Body: $body');
+      Http.Response _response = await Http.post(
+        Uri.parse(appBaseUrl + uri),
+        body: jsonEncode(body),
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> postMultipartData(
+      String uri, Map<String, String> body, List<MultipartBody> multipartBody,
+      {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      debugPrint('====> API Body: $body');
+      Http.MultipartRequest _request =
+          Http.MultipartRequest('POST', Uri.parse(appBaseUrl + uri));
+      _request.headers.addAll(headers ?? _mainHeaders);
+      for (MultipartBody multipart in multipartBody) {
+        _request.files.add(Http.MultipartFile(
+          multipart.key,
+          XFile.fromData(multipart.file).readAsBytes().asStream(),
+          multipart.file.length,
+          filename: '${DateTime.now().toString()}.png',
+        ));
+      }
+      _request.fields.addAll(body);
+      Http.Response _response =
+          await Http.Response.fromStream(await _request.send());
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> putData(String uri, dynamic body,
+      {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      debugPrint('====> API Body: $body');
+      Http.Response _response = await Http.put(
+        Uri.parse(appBaseUrl + uri),
+        body: jsonEncode(body),
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> deleteData(String uri,
+      {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      Http.Response _response = await Http.delete(
         Uri.parse(appBaseUrl + uri),
         headers: headers ?? _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
