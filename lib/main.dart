@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kleen/themes/themes.dart';
+import 'package:kleen/widgets/app_widgets.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: HomeScreen(),
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppThemes.lightTheme,
+      home: const HomeScreen(),
     ),
   );
 }
@@ -14,9 +18,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-     
+      appBar: PrimaryAppBar(
+        leading: Padding(
+           padding:const EdgeInsets.only(left: 20),
+          child: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {},
+          ),
+        ),
+        actions: const [Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: CircleAvatar(),
+        )],
       ),
     );
   }
