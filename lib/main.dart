@@ -6,9 +6,9 @@ import 'package:kleen/themes/themes.dart';
 import 'package:kleen/views/screens/auth/sign_in_screen.dart';
 
 
-void main() {
+void main()async {
    WidgetsFlutterBinding.ensureInitialized();
-   getInitialize();
+ await  getInitialize();
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
