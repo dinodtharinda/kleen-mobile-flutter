@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, empty_catches
+// ignore_for_file: no_leading_underscores_for_local_identifiers, empty_catches, library_prefixes
 
 import 'dart:convert';
 import 'dart:typed_data';
@@ -24,7 +24,7 @@ class ApiClient extends GetxService {
     token = sharedPreferences.getString(AppConstants.TOKEN);
     debugPrint('Token: $token');
     updateHeader(
-        token!, sharedPreferences.getString("AppConstants.LANGUAGE_CODE"));
+        token, sharedPreferences.getString("AppConstants.LANGUAGE_CODE"));
   }
   void updateHeader(String? token, String? languageCode) {
     _mainHeaders = {
@@ -51,8 +51,8 @@ class ApiClient extends GetxService {
     }
   }
 
-  Future<Response> postData(String uri, dynamic body,
-      {Map<String, String>? headers}) async {
+  Future<Response> postData(
+      {required String uri,required dynamic body,Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body');
