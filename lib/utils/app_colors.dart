@@ -5,7 +5,5 @@ class AppColor{
  static const Color secondaryColor = Color(0xFFFFD06D);
  static const Color backColor = Colors.black;
  static const Color lightColor = Colors.white;
- static const Color darkColor = Colors.grey;
-
-
+ static const Color darkColor = Colors.black;
 }

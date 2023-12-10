@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kleen/controllers/auth_controller.dart';
 import 'package:kleen/utils/app_constants.dart';
+import 'package:kleen/widgets/app_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -21,38 +22,38 @@ class _SignInScreenState extends State<SignInScreen> {
       body: GetBuilder<AuthController>(
         builder: (authController) {
           return Center(
-            child: authController.isLoading
-                ? const CircularProgressIndicator()
-                : Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextField(
-                          controller: emailController,
-                        ),
-                        TextField(
-                          controller: passwordController,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              _login(authController, emailController,
-                                  passwordController, context);
-                            },
-                            child: const Text("Login")),
-                        TextButton(
-                            onPressed: () async {
-                              SharedPreferences sharedPreferences =
-                                  await SharedPreferences.getInstance();
-
-                              String? token = sharedPreferences
-                                  .getString(AppConstants.TOKEN);
-                              print(token ?? "NO TOKEN");
-                            },
-                            child: const Text("token"))
-                      ],
-                    ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: emailController,
                   ),
+                  TextField(
+                    controller: passwordController,
+                  ),
+                  PrimaryAppButton(
+                    title: "SIGN IN",
+                    isLoading: authController.isLoading,
+                    onTap: () {
+                      _login(authController, emailController,
+                          passwordController, context);
+                    },
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        SharedPreferences sharedPreferences =
+                            await SharedPreferences.getInstance();
+
+                        String? token =
+                            sharedPreferences.getString(AppConstants.TOKEN);
+                        print(token ?? "NO TOKEN");
+                      },
+                      child: const Text("token")),
+                ],
+              ),
+            ),
           );
         },
       ),
