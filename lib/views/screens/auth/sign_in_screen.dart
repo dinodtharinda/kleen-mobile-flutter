@@ -1,57 +1,32 @@
 // ignore_for_file: avoid_print, no_leading_underscores_for_local_identifiers
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kleen/controllers/auth_controller.dart';
-import 'package:kleen/data/api/api_client.dart';
-import 'package:kleen/data/repository/auth_repo.dart';
 import 'package:kleen/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
-
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  bool isLoading = false;
-  Future<void> fetch() async {
-    setState(() {
-      isLoading = true;
-    });
-    final sharedPreferences = await SharedPreferences.getInstance();
-    Get.lazyPut(() => sharedPreferences);
-    Get.lazyPut(() => ApiClient(
-        appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
-    Get.lazyPut(
-        () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-    Get.lazyPut(() => AuthController(authRepo: Get.find()));
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    fetch();
-    super.initState();
-  }
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: isLoading
-            ? const CircularProgressIndicator()
-            : GetBuilder<AuthController>(
-                builder: (authController) {
-                  return Padding(
+      body: GetBuilder<AuthController>(
+        builder: (authController) {
+          return Center(
+            child: authController.isLoading
+                ? const CircularProgressIndicator()
+                : Padding(
                     padding: const EdgeInsets.all(10),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextField(
                           controller: emailController,
@@ -65,21 +40,23 @@ class _SignInScreenState extends State<SignInScreen> {
                                   passwordController, context);
                             },
                             child: const Text("Login")),
-                               TextButton(
-                            onPressed: ()async {
-                              SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                        TextButton(
+                            onPressed: () async {
+                              SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
 
-                             String? token =  sharedPreferences.getString(AppConstants.TOKEN);
-                             print(token??"NO TOKEN");
+                              String? token = sharedPreferences
+                                  .getString(AppConstants.TOKEN);
+                              print(token ?? "NO TOKEN");
                             },
                             child: const Text("token"))
-
-                            
                       ],
                     ),
-                  );
-                },
-              ));
+                  ),
+          );
+        },
+      ),
+    );
   }
 
   void _login(AuthController authController, TextEditingController emailCtlr,
