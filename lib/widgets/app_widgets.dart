@@ -37,44 +37,44 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size(double.infinity, kToolbarHeight);
 }
 
-
-
-
 class PrimaryAppButton extends StatelessWidget {
-  
-
   final Color color;
   final String title;
   final VoidCallback onTap;
   final bool isLoading;
+  final bool disabled;
   const PrimaryAppButton(
       {super.key,
       this.color = AppColor.primaryColor,
       required this.title,
       required this.onTap,
-      this.isLoading = false});
+      this.isLoading = false,
+      this.disabled = false});
 
-   
   @override
   Widget build(BuildContext context) {
-       final Color _lightColor = Theme.of(context).primaryColorLight;
-       final Color _darkColor = Theme.of(context).primaryColorLight;
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorLight;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: !disabled
+          ? onTap
+          : () {
+              print("Button Disabled!");
+            },
       child: Container(
         margin: const EdgeInsets.all(10),
         width: double.infinity,
         height: MediaQuery.of(context).size.width * 0.12,
         decoration: BoxDecoration(
-          color: color,
+          color: isLoading||disabled ? color.withOpacity(0.6) : color,
           borderRadius: BorderRadius.circular(
             Dimensions.RADIUS_SMALL,
           ),
         ),
         child: Center(
             child: isLoading
-                ?  SizedBox(
+                ? SizedBox(
                     width: 25,
                     height: 25,
                     child: CircularProgressIndicator(
