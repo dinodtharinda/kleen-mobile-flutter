@@ -24,7 +24,19 @@ class Dimensions {
   static const double RADIUS_EXTRA_LARGE = 20.0;
 
 
-  static double r_iconSize(BuildContext context){
-    return MediaQuery.of(context).size.width * 0.06;
+  static double R_ICON_SIZE(BuildContext context){
+    return MediaQuery.of(context).size.width * 0.05;
   }
+
+    static double R_FONT_SIZE_DEFAULT(BuildContext context){
+    return MediaQuery.of(context).size.width * 0.04;
+  }
+
+
+  static const FontWeight FONT_WEIGHT_EXTASMALL = FontWeight.w200;
+  static const FontWeight FONT_WEIGHT_SMALL = FontWeight.w300;
+
+  static const FontWeight FONT_WEIGHT_DEFAULT = FontWeight.w400;
+  static const FontWeight FONT_WEIGHT_LARGE = FontWeight.w700;
+
 }

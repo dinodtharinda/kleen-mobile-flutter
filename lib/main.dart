@@ -12,7 +12,7 @@ void main()async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppThemes.lightTheme,
+      theme: AppThemes.darkTheme,
       home: const SignInScreen(),
     ),
   );
