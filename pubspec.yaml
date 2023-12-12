@@ -16,15 +16,6 @@ dependencies:
   shared_preferences: ^2.2.2
   cross_file: ^0.3.3+8
   
-
-
-
-
-
-
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

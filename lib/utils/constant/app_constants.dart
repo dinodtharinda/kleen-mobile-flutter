@@ -1,7 +1,8 @@
 // ignore_for_file: constant_identifier_names
+import '../../data/model/models/language_model.dart';
+import 'images.dart';
 
-import 'package:kleen/data/model/models/language_model.dart';
-import 'package:kleen/utils/images.dart';
+
 
 class AppConstants {
   static const String BASE_URL = 'http://matrixfinance.nexmatrixlab.com';

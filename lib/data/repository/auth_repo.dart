@@ -1,7 +1,9 @@
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:kleen/data/api/api_client.dart';
-import 'package:kleen/utils/app_constants.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utils/constant/app_constants.dart';
 
 class AuthRepo {
   final ApiClient apiClient;

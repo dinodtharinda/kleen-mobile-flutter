@@ -1,11 +1,13 @@
 // ignore_for_file: avoid_print, prefer_function_declarations_over_variables, no_leading_underscores_for_local_identifiers, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:kleen/utils/app_colors.dart';
-import 'package:kleen/utils/dimensions.dart';
+import '../constant/dimensions.dart';
+import '../themes/app_colors.dart';
 
-class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const PrimaryAppBar({
+
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
     super.key,
     this.title = "",
     this.actions = const [],
@@ -37,13 +39,13 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size(double.infinity, kToolbarHeight);
 }
 
-class PrimaryAppButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final Color color;
   final String title;
   final VoidCallback onTap;
   final bool isLoading;
   final bool disabled;
-  const PrimaryAppButton(
+  const CustomButton(
       {super.key,
       this.color = AppColor.primaryColor,
       required this.title,
@@ -65,9 +67,9 @@ class PrimaryAppButton extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(10),
         width: double.infinity,
-        height: MediaQuery.of(context).size.width * 0.12,
+        height: MediaQuery.of(context).size.width * 0.11,
         decoration: BoxDecoration(
-          color: isLoading||disabled ? color.withOpacity(0.6) : color,
+          color: isLoading || disabled ? color.withOpacity(0.6) : color,
           borderRadius: BorderRadius.circular(
             Dimensions.RADIUS_SMALL,
           ),
@@ -89,6 +91,63 @@ class PrimaryAppButton extends StatelessWidget {
                         fontSize: Dimensions.FONT_SIZE_BUTTON,
                         fontWeight: FontWeight.w500),
                   )),
+      ),
+    );
+  }
+}
+
+class CustomField extends StatelessWidget {
+  const CustomField({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final _sigInFormKey = GlobalKey<FormState>();
+    return Container(
+      margin: const EdgeInsets.all(10),
+      height: MediaQuery.of(context).size.width * 0.11,
+      child: TextField(
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsetsDirectional.zero,
+          prefixIcon: Icon(
+            Icons.email,
+            size: Dimensions.r_iconSize(context),
+          ),
+          focusColor: AppColor.primaryColor,
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomPasswordField extends StatelessWidget {
+  const CustomPasswordField({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final _sigInFormKey = GlobalKey<FormState>();
+    return Container(
+      margin: const EdgeInsets.all(10),
+      height: MediaQuery.of(context).size.width * 0.11,
+      child: TextField(
+        obscureText: true,
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+          suffixIcon: Icon(
+            Icons.remove_red_eye_rounded,
+            size: Dimensions.r_iconSize(context),
+          ),
+          contentPadding: EdgeInsetsDirectional.zero,
+          prefixIcon: Icon(
+            Icons.password,
+            size: Dimensions.r_iconSize(context),
+          ),
+          focusColor: AppColor.primaryColor,
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+        ),
       ),
     );
   }

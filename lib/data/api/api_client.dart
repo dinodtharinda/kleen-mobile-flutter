@@ -7,9 +7,11 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
 import 'package:kleen/data/model/response/error_response.dart';
-import 'package:kleen/utils/app_constants.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+
+import '../../utils/constant/app_constants.dart';
 
 class ApiClient extends GetxService {
   final String appBaseUrl;

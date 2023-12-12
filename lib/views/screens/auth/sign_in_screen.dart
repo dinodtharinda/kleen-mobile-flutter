@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kleen/controllers/auth_controller.dart';
-import 'package:kleen/utils/app_constants.dart';
-import 'package:kleen/widgets/app_widgets.dart';
+
+import 'package:kleen/utils/custom/app_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../utils/constant/app_constants.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -27,13 +29,15 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextField(
-                    controller: emailController,
-                  ),
-                  TextField(
-                    controller: passwordController,
-                  ),
-                  PrimaryAppButton(
+                  // TextField(
+                  //   controller: emailController,
+                  // ),
+                  // TextField(
+                  //   controller: passwordController,
+                  // ),
+                  CustomField(),
+                  CustomPasswordField(),
+                  CustomButton(
                     title: "SIGN IN",
                     isLoading: authController.isLoading,
                     onTap: () {
@@ -41,6 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           passwordController, context);
                     },
                   ),
+              
                   TextButton(
                       onPressed: () async {
                         SharedPreferences sharedPreferences =
