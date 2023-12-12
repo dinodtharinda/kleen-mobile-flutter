@@ -1,23 +1,20 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:kleen/helper/get_initialize.dart';
+import 'package:kleen/utils/themes/themes.dart';
+import 'package:kleen/views/screens/auth/sign_in_screen.dart';
+
+
+void main()async {
+   WidgetsFlutterBinding.ensureInitialized();
+ await  getInitialize();
   runApp(
-    const MaterialApp(
-      home: HomeScreen(),
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppThemes.lightTheme,
+      home: const SignInScreen(),
     ),
   );
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-     
-      ),
-    );
-  }
-}
