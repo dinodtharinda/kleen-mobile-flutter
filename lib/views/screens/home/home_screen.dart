@@ -1,30 +1,34 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kleen/utils/custom/app_custom_widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isDarkMode = Get.isDarkMode;
+  @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Get.isDarkMode;
+    
     return Scaffold(
       appBar: CustomAppBar(
         title: "Home",
         actions: [
           IconButton(
               onPressed: () {
-                Get.changeThemeMode(
-                    isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                (context as Element).reassemble();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
+                setState(() {
+                  Get.changeThemeMode(
+                      isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                      isDarkMode = !isDarkMode;
+                      (context as Element).reassemble();
+                });
               },
               icon: isDarkMode
                   ? const Icon(Icons.light_mode)

@@ -3,7 +3,7 @@ import 'colors.dart';
 
 class AppThemes {
   static ThemeData lightTheme = ThemeData.light().copyWith(
-     brightness: Brightness.light,
+
     scaffoldBackgroundColor: CustomColor.lightColor,
     primaryColor: CustomColor.primaryColor,
     appBarTheme: const AppBarTheme(color: CustomColor.lightColor),
@@ -14,7 +14,7 @@ class AppThemes {
   );
 
   static ThemeData darkTheme = ThemeData.dark().copyWith(
-    brightness: Brightness.dark,
+
     scaffoldBackgroundColor: CustomColor.backColor,
     primaryColor: CustomColor.primaryColor,
     appBarTheme: const AppBarTheme(color: CustomColor.backColor),

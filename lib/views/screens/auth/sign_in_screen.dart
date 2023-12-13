@@ -41,7 +41,7 @@ class SignInScreen extends StatelessWidget {
                       // _login(authController, emailController,
                       //     passwordController, context);
                       Navigator.push(context, MaterialPageRoute(builder: (c){
-                        return const HomeScreen();
+                        return  HomeScreen();
                       }));
                     },
                   ),

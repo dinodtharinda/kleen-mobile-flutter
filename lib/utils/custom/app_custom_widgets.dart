@@ -2,7 +2,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../constant/dimensions.dart';
 import '../constant/images.dart';
 import '../themes/colors.dart';
@@ -24,12 +23,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+     final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
     return AppBar(
       centerTitle: true,
       actions: actions,
       leading: leading,
       elevation: 0,
-      title: Text(title, style: textStyleDefault.copyWith(color: Get.theme.primaryColorDark)),
+      title: Text(title,
+          style: textStyleDefault(context).copyWith(color: _darkColor)),
     );
   }
 
@@ -84,7 +86,8 @@ class CustomButton extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style: textStyleDefault.copyWith(color: CustomColor.lightColor),
+                    style: textStyleDefault(context).copyWith(
+                        color: CustomColor.lightColor),
                   )),
       ),
     );
@@ -134,14 +137,14 @@ class _CustomFieldState extends State<CustomField> {
         controller: widget.controller,
         focusNode: _focusNode,
         textAlignVertical: TextAlignVertical.center,
-        style: textStyleDefault.copyWith(color: _darkColor),
+        style: textStyleDefault(context).copyWith(color: _darkColor),
         cursorColor: CustomColor.customGrey,
         cursorWidth: 0.9,
         decoration: InputDecoration(
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: textStyleDefault.copyWith(color: CustomColor.customGrey),
+          hintStyle: textStyleDefault(context).copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -210,7 +213,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         controller: widget.controller,
         focusNode: _focusNode,
         textAlignVertical: TextAlignVertical.center,
-        style: textStyleDefault.copyWith(color: _darkColor),
+        style: textStyleDefault(context).copyWith(color: _darkColor),
         cursorColor: CustomColor.customGrey,
         cursorWidth: 0.9,
         obscureText: !_showPassword,
@@ -218,7 +221,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: textStyleDefault.copyWith(color: CustomColor.customGrey),
+          hintStyle: textStyleDefault(context).copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -277,19 +280,24 @@ class ServiceCard extends StatefulWidget {
 
 class _ServiceCardState extends State<ServiceCard> {
   bool _isLiked = false;
+  
   @override
   Widget build(BuildContext context) {
+       final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+     ThemeData appTheme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-        border: Get.isDarkMode?  Border.all(width: 1,color: CustomColor.lightColor):null,
-          color: Get.theme.primaryColorLight,
+          
+          border: appTheme.brightness == Brightness.dark
+              ? Border.all(width: 1, color: CustomColor.lightColor)
+              : null,
+          color: _lightColor,
           borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
-          boxShadow: [
-           Get.isDarkMode? const BoxShadow():boxShadow
-          ],
+          boxShadow: [appTheme.brightness == Brightness.dark ? const BoxShadow() : boxShadow],
         ),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,12 +355,13 @@ class _ServiceCardState extends State<ServiceCard> {
                       Text(widget.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: textStyleDefault.copyWith(color: Get.theme.primaryColorDark)),
+                          style: textStyleDefault(context).copyWith(
+                              color: _darkColor)),
                       Text(
                         widget.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: textStyleSmall.copyWith(
+                        style: textStyleSmall(context).copyWith(
                             color: CustomColor.customGrey),
                       ),
                       RatingBar(
@@ -443,8 +452,7 @@ class RatingBar extends StatelessWidget {
                 left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Text(
               " $ratingCount",
-              style: textStyleSmall.copyWith(
-                  color: CustomColor.primaryColor),
+              style: textStyleSmall(context).copyWith(color: CustomColor.primaryColor),
             ),
           ))
         : const SizedBox();
