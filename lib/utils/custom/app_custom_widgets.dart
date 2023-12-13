@@ -2,9 +2,10 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../constant/dimensions.dart';
 import '../constant/images.dart';
-import '../themes/app_colors.dart';
+import '../themes/colors.dart';
 import '../themes/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -28,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       leading: leading,
       elevation: 0,
-      title: Text(title, style: textStyleDefault),
+      title: Text(title, style: textStyleDefault.copyWith(color: Get.theme.primaryColorDark)),
     );
   }
 
@@ -83,7 +84,7 @@ class CustomButton extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style:textStyleDefault.copyWith(color: _lightColor),
+                    style: textStyleDefault.copyWith(color: CustomColor.lightColor),
                   )),
       ),
     );
@@ -217,7 +218,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle:textStyleDefault.copyWith(color: CustomColor.customGrey),
+          hintStyle: textStyleDefault.copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -283,15 +284,11 @@ class _ServiceCardState extends State<ServiceCard> {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          color: CustomColor.lightColor,
+        border: Get.isDarkMode?  Border.all(width: 1,color: CustomColor.lightColor):null,
+          color: Get.theme.primaryColorLight,
           borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
           boxShadow: [
-            BoxShadow(
-              color: CustomColor.customGrey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
+           Get.isDarkMode? const BoxShadow():boxShadow
           ],
         ),
         child: Column(
@@ -350,13 +347,13 @@ class _ServiceCardState extends State<ServiceCard> {
                       Text(widget.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: textStyleDefault),
+                          style: textStyleDefault.copyWith(color: Get.theme.primaryColorDark)),
                       Text(
                         widget.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: textStyleSmall.copyWith(
-                            color: Theme.of(context).disabledColor),
+                            color: CustomColor.customGrey),
                       ),
                       RatingBar(
                         rating: widget.rating,
@@ -447,7 +444,7 @@ class RatingBar extends StatelessWidget {
             child: Text(
               " $ratingCount",
               style: textStyleSmall.copyWith(
-                  color: Theme.of(context).disabledColor),
+                  color: CustomColor.primaryColor),
             ),
           ))
         : const SizedBox();
