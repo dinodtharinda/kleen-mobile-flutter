@@ -1,8 +1,11 @@
-// ignore_for_file: avoid_print, prefer_function_declarations_over_variables, no_leading_underscores_for_local_identifiers, unused_local_variable, unused_field
+// ignore_for_file: avoid_print, prefer_function_declarations_over_variables, no_leading_underscores_for_local_identifiers, unused_local_variable, unused_field, dead_code
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../constant/dimensions.dart';
+import '../constant/images.dart';
 import '../themes/app_colors.dart';
+import '../themes/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -10,13 +13,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title = "",
     this.actions = const [],
     this.leading = const SizedBox(),
-    this.fontSize = 17,
-    this.fontWeight = FontWeight.w700,
+    this.fontWeight = Dimensions.FONT_WEIGHT_DEFAULT,
   });
   final String title;
   final List<Widget> actions;
   final Widget leading;
-  final double fontSize;
+
   final FontWeight fontWeight;
 
   @override
@@ -28,7 +30,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       title: Text(
         title,
-        style: TextStyle(fontWeight: fontWeight, fontSize: fontSize),
+        style: TextStyle(
+          fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
+          fontSize: Dimensions.R_FONT_SIZE_LARGE,
+        ),
       ),
     );
   }
@@ -268,6 +273,235 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
   }
 }
 
-
-
 //hello
+
+class ServiceCard extends StatefulWidget {
+  const ServiceCard(
+      {super.key,
+      required this.title,
+      required this.description,
+      this.rating = 0,
+      this.ratingCount = 0,
+      required this.imageUrl});
+  final String title;
+  final String description;
+  final double rating;
+  final double ratingCount;
+  final String imageUrl;
+
+  @override
+  State<ServiceCard> createState() => _ServiceCardState();
+}
+
+class _ServiceCardState extends State<ServiceCard> {
+  bool _isLiked = false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 200,
+        decoration: BoxDecoration(
+          color: CustomColor.lightColor,
+          borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+          boxShadow: [
+            BoxShadow(
+              color: CustomColor.customGrey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Stack(fit: StackFit.passthrough, children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(Dimensions.RADIUS_SMALL)),
+                  child: CustomImage(
+                    image: widget.imageUrl,
+                    height: 80,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _isLiked = !_isLiked;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(
+                            Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.RADIUS_SMALL),
+                        ),
+                        child: Icon(
+                          _isLiked ? Icons.favorite : Icons.favorite_border,
+                          size: 15,
+                          color: _isLiked
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    )),
+              ]),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                  left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: robotoMedium.copyWith(
+                            fontSize: Dimensions.fontSizeSmall),
+                      ),
+                      Text(
+                        widget.description,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: robotoMedium.copyWith(
+                            fontSize: Dimensions.fontSizeExtraSmall,
+                            color: Theme.of(context).disabledColor),
+                      ),
+                      RatingBar(
+                        rating: widget.rating,
+                        ratingCount: widget.ratingCount,
+                        size: 12,
+                      ),
+                    ]),
+              ),
+            ]),
+      ),
+    );
+  }
+}
+
+class CustomImage extends StatelessWidget {
+  final String image;
+  final double height;
+  final double width;
+  final BoxFit fit;
+  final bool isNotification;
+  const CustomImage(
+      {super.key,
+      required this.image,
+      this.height = 16,
+      this.width = 16,
+      this.fit = BoxFit.cover,
+      this.isNotification = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: image,
+      height: height,
+      width: width,
+      fit: fit,
+      placeholder: (context, url) => Image.asset(
+          isNotification ? Images.logo : Images.logo,
+          height: height,
+          width: width,
+          fit: fit),
+      errorWidget: (context, url, error) => Image.asset(
+          isNotification ? Images.logo : Images.logo,
+          height: height,
+          width: width,
+          fit: fit),
+    );
+  }
+}
+
+class RatingBar extends StatelessWidget {
+  final double rating;
+  final double size;
+  final double ratingCount;
+  const RatingBar(
+      {super.key,
+      required this.rating,
+      required this.ratingCount,
+      this.size = 18});
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> _starList = [];
+    int realNumber = rating.floor();
+    int partNumber = ((rating - realNumber) * 10).ceil();
+
+    for (int i = 0; i < 5; i++) {
+      if (i < realNumber) {
+        _starList.add(Icon(Icons.star,
+            color: Theme.of(context).primaryColor, size: size));
+      } else if (i == realNumber) {
+        _starList.add(SizedBox(
+          height: size,
+          width: size,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Icon(Icons.star,
+                  color: Theme.of(context).primaryColor, size: size),
+              ClipRect(
+                clipper: _Clipper(part: partNumber),
+                child: Icon(Icons.star, color: Colors.grey, size: size),
+              )
+            ],
+          ),
+        ));
+      } else {
+        _starList.add(Icon(Icons.star, color: Colors.grey, size: size));
+      }
+    }
+    ratingCount > 0
+        ? _starList.add(Padding(
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            child: Text(
+              " $ratingCount",
+              style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeExtraSmall,
+                  color: Theme.of(context).disabledColor),
+            ),
+          ))
+        : const SizedBox();
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: _starList,
+    );
+  }
+}
+
+class _Clipper extends CustomClipper<Rect> {
+  final int part;
+  _Clipper({required this.part});
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTRB(
+      (size.width / 10) * part,
+      0.0,
+      size.width,
+      size.height,
+    );
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
+}
