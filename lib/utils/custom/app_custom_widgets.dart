@@ -23,15 +23,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-     final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _lightColor = Theme.of(context).primaryColorLight;
     final Color _darkColor = Theme.of(context).primaryColorDark;
     return AppBar(
       centerTitle: true,
       actions: actions,
       leading: leading,
       elevation: 0,
-      title: Text(title,
-          style: textStyleDefault(context).copyWith(color: _darkColor)),
+      title: Text(
+        title,
+        style: textStyleLarge(context).copyWith(color: _darkColor),
+      ),
     );
   }
 
@@ -86,8 +88,8 @@ class CustomButton extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style: textStyleDefault(context).copyWith(
-                        color: CustomColor.lightColor),
+                    style: textStyleDefault(context)
+                        .copyWith(color: CustomColor.lightColor),
                   )),
       ),
     );
@@ -144,7 +146,8 @@ class _CustomFieldState extends State<CustomField> {
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: textStyleDefault(context).copyWith(color: CustomColor.customGrey),
+          hintStyle:
+              textStyleDefault(context).copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -221,7 +224,8 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: textStyleDefault(context).copyWith(color: CustomColor.customGrey),
+          hintStyle:
+              textStyleDefault(context).copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -280,31 +284,34 @@ class ServiceCard extends StatefulWidget {
 
 class _ServiceCardState extends State<ServiceCard> {
   bool _isLiked = false;
-  
+
   @override
   Widget build(BuildContext context) {
-       final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _lightColor = Theme.of(context).primaryColorLight;
     final Color _darkColor = Theme.of(context).primaryColorDark;
-     ThemeData appTheme = Theme.of(context);
+    ThemeData appTheme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          
           border: appTheme.brightness == Brightness.dark
               ? Border.all(width: 1, color: CustomColor.lightColor)
               : null,
           color: _lightColor,
           borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
-          boxShadow: [appTheme.brightness == Brightness.dark ? const BoxShadow() : boxShadow],
+          boxShadow: [
+            appTheme.brightness == Brightness.dark
+                ? const BoxShadow()
+                : boxShadow
+          ],
         ),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Stack(fit: StackFit.passthrough, children: [
+              Stack(children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(Dimensions.RADIUS_SMALL)),
@@ -342,34 +349,36 @@ class _ServiceCardState extends State<ServiceCard> {
                       ),
                     )),
               ]),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                  left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                ),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(widget.title,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                  ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(widget.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: textStyleDefault(context)
+                                .copyWith(color: _darkColor)),
+                        Text(
+                          widget.description,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: textStyleDefault(context).copyWith(
-                              color: _darkColor)),
-                      Text(
-                        widget.description,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textStyleSmall(context).copyWith(
-                            color: CustomColor.customGrey),
-                      ),
-                      RatingBar(
-                        rating: widget.rating,
-                        ratingCount: widget.ratingCount,
-                        size: 12,
-                      ),
-                    ]),
+                          style: textStyleSmall(context)
+                              .copyWith(color: CustomColor.customGrey),
+                        ),
+                        RatingBar(
+                          rating: widget.rating,
+                          ratingCount: widget.ratingCount,
+                          size: 12,
+                        ),
+                      ]),
+                ),
               ),
             ]),
       ),
@@ -421,11 +430,11 @@ class RatingBar extends StatelessWidget {
     List<Widget> _starList = [];
     int realNumber = rating.floor();
     int partNumber = ((rating - realNumber) * 10).ceil();
+    Color startColor = Colors.yellow;
 
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
-        _starList.add(Icon(Icons.star,
-            color: Theme.of(context).primaryColor, size: size));
+        _starList.add(Icon(Icons.star, color: startColor, size: size));
       } else if (i == realNumber) {
         _starList.add(SizedBox(
           height: size,
@@ -433,8 +442,7 @@ class RatingBar extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Icon(Icons.star,
-                  color: Theme.of(context).primaryColor, size: size),
+              Icon(Icons.star, color: startColor, size: size),
               ClipRect(
                 clipper: _Clipper(part: partNumber),
                 child: Icon(Icons.star, color: Colors.grey, size: size),
@@ -452,7 +460,7 @@ class RatingBar extends StatelessWidget {
                 left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Text(
               " $ratingCount",
-              style: textStyleSmall(context).copyWith(color: CustomColor.primaryColor),
+              style: textStyleSmall(context).copyWith(color: startColor),
             ),
           ))
         : const SizedBox();
@@ -479,4 +487,98 @@ class _Clipper extends CustomClipper<Rect> {
 
   @override
   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
+}
+
+class ImageCard extends StatelessWidget {
+  const ImageCard(
+      {super.key,
+      required this.title,
+      required this.ratings,
+      required this.imageUrl});
+  final String title;
+  final double ratings;
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    ThemeData appTheme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        decoration: BoxDecoration(
+            border: appTheme.brightness == Brightness.dark
+                ?border
+                : null,
+            borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+            boxShadow: [
+              appTheme.brightness == Brightness.dark
+                  ? const BoxShadow()
+                  : boxShadow,
+            ]),
+        width: 150,
+        height: 150,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+              child: CustomImage(
+                image: imageUrl,
+                fit: BoxFit.cover,
+                width: 150,
+                height: 150,
+              ),
+            ),
+            Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+                gradient: LinearGradient(colors: [
+                  CustomColor.backColor.withOpacity(0.7),
+                  CustomColor.backColor.withOpacity(0.1)
+                ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    title,
+                    style: textStyleLarge(context).copyWith(
+                        color: CustomColor.lightColor,
+                        fontWeight: Dimensions.FONT_WEIGHT_LARGE),
+                  ),
+                  RatingBar(rating: ratings, ratingCount: 0),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SeeAllButton extends StatelessWidget {
+  const SeeAllButton({super.key, required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5,left: 5,right: 10),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Text("See All",
+            style: textStyleDefault(context).copyWith(
+              color: CustomColor.primaryColor,
+              fontWeight: Dimensions.FONT_WEIGHT_LARGE
+            ),),
+      ),
+    );
+  }
 }
