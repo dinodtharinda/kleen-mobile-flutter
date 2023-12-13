@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Dimensions {
-
-  static double fontSizeExtraSmall = Get.width >= 1300 ? 14 : 10;
-  static double fontSizeSmall = Get.width >= 1300 ? 16 : 12;
-  static double fontSizeDefault = Get.width >= 1300 ? 18 : 14;
-  static double fontSizeLarge = Get.width >= 1300 ? 20 : 16;
-  static double fontSizeExtraLarge = Get.width >= 1300 ? 22 : 18;
-  static double fontSizeOverLarge = Get.width >= 1300 ? 28 : 24;
-
+  // static double fontSizeExtraSmall = Get.width >= 1300 ? 14 : 10;
+  // static double fontSizeSmall = Get.width >= 1300 ? 16 : 12;
+  // static double fontSizeDefault = Get.width >= 1300 ? 18 : 14;
+  // static double fontSizeLarge = Get.width >= 1300 ? 20 : 16;
+  // static double fontSizeExtraLarge = Get.width >= 1300 ? 22 : 18;
+  // static double fontSizeOverLarge = Get.width >= 1300 ? 28 : 24;
 
   static const double FONT_SIZE_EXTRA_SMALL = 10.0;
   static const double FONT_SIZE_SMALL = 12.0;
@@ -36,14 +34,9 @@ class Dimensions {
     return Get.mediaQuery.size.width * 0.05;
   }
 
-  static double R_FONT_SIZE_DEFAULT(BuildContext contexmkt) {
-    return Get.mediaQuery.size.width * 0.04;
-  }
-    static double R_FONT_SIZE_SMALL(BuildContext colntext) {
-    return Get.mediaQuery.size.width * 0.03;
-  }
-
-   static double R_FONT_SIZE_LARGE = Get.width * 0.05;
+  static double R_FONT_SIZE_DEFAULT = Get.mediaQuery.size.width * 0.03;
+  static double R_FONT_SIZE_SMALL = Get.width * 0.025;
+  static double R_FONT_SIZE_LARGE = Get.width * 0.04;
 
   static const FontWeight FONT_WEIGHT_EXTASMALL = FontWeight.w200;
   static const FontWeight FONT_WEIGHT_SMALL = FontWeight.w300;

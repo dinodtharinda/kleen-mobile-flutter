@@ -2,32 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../constant/dimensions.dart';
 
-final robotoRegular = TextStyle(
+
+final textStyleDefault = TextStyle(
   fontFamily: 'Roboto',
-  fontWeight: FontWeight.w400,
-  fontSize: Dimensions.fontSizeDefault,
+  fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
+  fontSize: Dimensions.R_FONT_SIZE_DEFAULT,
 );
 
-final robotoMedium = TextStyle(
+final textStyleSmall = TextStyle(
   fontFamily: 'Roboto',
-  fontWeight: FontWeight.w500,
-  fontSize: Dimensions.fontSizeDefault,
+  fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
+  fontSize: Dimensions.R_FONT_SIZE_SMALL,
 );
 
-final robotoBold = TextStyle(
+final textStyleLarge = TextStyle(
   fontFamily: 'Roboto',
-  fontWeight: FontWeight.w700,
-  fontSize: Dimensions.fontSizeDefault,
-);
-
-final robotoBlack = TextStyle(
-  fontFamily: 'Roboto',
-  fontWeight: FontWeight.w900,
-  fontSize: Dimensions.fontSizeDefault,
-);
-
-final robotoBlackLarge= TextStyle(
-  fontFamily: 'Roboto',
-  fontWeight: FontWeight.w900,
-  fontSize: Dimensions.fontSizeLarge,
+  fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
+  fontSize: Dimensions.R_FONT_SIZE_LARGE,
 );

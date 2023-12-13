@@ -24,5 +24,5 @@ class AppConstants {
 
 
 // flutter version - 3.16.3
-// cached_network_image.dart
-// get.dart
+// cached_network_image: ^3.3.0
+// get: ^4.6.6

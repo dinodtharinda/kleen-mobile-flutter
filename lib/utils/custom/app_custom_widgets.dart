@@ -28,13 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       leading: leading,
       elevation: 0,
-      title: Text(
-        title,
-        style: TextStyle(
-          fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
-          fontSize: Dimensions.R_FONT_SIZE_LARGE,
-        ),
-      ),
+      title: Text(title, style: textStyleDefault),
     );
   }
 
@@ -89,10 +83,7 @@ class CustomButton extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style: TextStyle(
-                        color: _lightColor,
-                        fontSize: Dimensions.R_FONT_SIZE_DEFAULT(context),
-                        fontWeight: FontWeight.w500),
+                    style:textStyleDefault.copyWith(color: _lightColor),
                   )),
       ),
     );
@@ -142,19 +133,14 @@ class _CustomFieldState extends State<CustomField> {
         controller: widget.controller,
         focusNode: _focusNode,
         textAlignVertical: TextAlignVertical.center,
-        style: TextStyle(
-            color: _darkColor,
-            fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
-            fontSize: Dimensions.R_FONT_SIZE_DEFAULT(context)),
+        style: textStyleDefault.copyWith(color: _darkColor),
         cursorColor: CustomColor.customGrey,
         cursorWidth: 0.9,
         decoration: InputDecoration(
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: const TextStyle(
-              color: CustomColor.customGrey,
-              fontWeight: Dimensions.FONT_WEIGHT_SMALL),
+          hintStyle: textStyleDefault.copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -223,10 +209,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         controller: widget.controller,
         focusNode: _focusNode,
         textAlignVertical: TextAlignVertical.center,
-        style: TextStyle(
-            color: _darkColor,
-            fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
-            fontSize: Dimensions.R_FONT_SIZE_DEFAULT(context)),
+        style: textStyleDefault.copyWith(color: _darkColor),
         cursorColor: CustomColor.customGrey,
         cursorWidth: 0.9,
         obscureText: !_showPassword,
@@ -234,9 +217,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: const TextStyle(
-              color: CustomColor.customGrey,
-              fontWeight: Dimensions.FONT_WEIGHT_SMALL),
+          hintStyle:textStyleDefault.copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
@@ -366,19 +347,15 @@ class _ServiceCardState extends State<ServiceCard> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        widget.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: robotoMedium.copyWith(
-                            fontSize: Dimensions.fontSizeSmall),
-                      ),
+                      Text(widget.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: textStyleDefault),
                       Text(
                         widget.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: robotoMedium.copyWith(
-                            fontSize: Dimensions.fontSizeExtraSmall,
+                        style: textStyleSmall.copyWith(
                             color: Theme.of(context).disabledColor),
                       ),
                       RatingBar(
@@ -415,16 +392,10 @@ class CustomImage extends StatelessWidget {
       height: height,
       width: width,
       fit: fit,
-      placeholder: (context, url) => Image.asset(
-          isNotification ? Images.logo : Images.logo,
-          height: height,
-          width: width,
-          fit: fit),
-      errorWidget: (context, url, error) => Image.asset(
-          isNotification ? Images.logo : Images.logo,
-          height: height,
-          width: width,
-          fit: fit),
+      placeholder: (context, url) => Image.asset(Images.placeholder,
+          height: height, width: width, fit: fit),
+      errorWidget: (context, url, error) => Image.asset(Images.placeholder,
+          height: height, width: width, fit: fit),
     );
   }
 }
@@ -475,8 +446,7 @@ class RatingBar extends StatelessWidget {
                 left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Text(
               " $ratingCount",
-              style: robotoMedium.copyWith(
-                  fontSize: Dimensions.fontSizeExtraSmall,
+              style: textStyleSmall.copyWith(
                   color: Theme.of(context).disabledColor),
             ),
           ))
