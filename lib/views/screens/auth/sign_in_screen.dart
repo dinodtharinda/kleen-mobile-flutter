@@ -3,23 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kleen/controllers/auth_controller.dart';
 
-import 'package:kleen/utils/custom/app_custom.dart';
+import 'package:kleen/utils/custom/app_custom_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/constant/app_constants.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: GetBuilder<AuthController>(
         builder: (authController) {
@@ -29,14 +23,16 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // TextField(
-                  //   controller: emailController,
-                  // ),
-                  // TextField(
-                  //   controller: passwordController,
-                  // ),
-                  CustomField(),
-                  CustomPasswordField(),
+                  CustomField(
+                    icon: Icons.email,
+                    controller: emailController,
+                    hint: "Email, username or phone",
+                  ),
+                  CustomPasswordField(
+                    icon: Icons.password,
+                    controller: passwordController,
+                    hint: "Password",
+                  ),
                   CustomButton(
                     title: "SIGN IN",
                     isLoading: authController.isLoading,
@@ -45,7 +41,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           passwordController, context);
                     },
                   ),
-              
                   TextButton(
                       onPressed: () async {
                         SharedPreferences sharedPreferences =

@@ -2,8 +2,6 @@
 import '../../data/model/models/language_model.dart';
 import 'images.dart';
 
-
-
 class AppConstants {
   static const String BASE_URL = 'http://matrixfinance.nexmatrixlab.com';
   static const String LOGIN_URI = '/api/v1/auth/login';
@@ -26,3 +24,5 @@ class AppConstants {
 
 
 // flutter version - 3.16.3
+// cached_network_image: ^3.3.0
+// get: ^4.6.6
