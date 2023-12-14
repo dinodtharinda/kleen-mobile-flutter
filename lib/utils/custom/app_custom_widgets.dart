@@ -582,3 +582,37 @@ class SeeAllButton extends StatelessWidget {
     );
   }
 }
+
+class BackWidget extends StatelessWidget {
+  const BackWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(onPressed: (){
+      Navigator.pop(context);
+    }, icon: const Icon(Icons.arrow_back_ios));
+  }
+}
+
+
+
+class BottomNavItem extends StatelessWidget {
+  final IconData iconData;
+  final Function? onTap;
+  final bool isSelected;
+   const BottomNavItem({super.key, required this.iconData, this.onTap, this.isSelected = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: IconButton(
+        icon: Icon(iconData, color: isSelected ? Theme.of(context).primaryColor : Colors.grey, size: 25),
+        onPressed: (){
+          onTap;
+        },
+      ),
+    );
+  }
+}
+
+
