@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kleen/utils/custom/app_custom_widgets.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -16,7 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isDarkMode = Get.isDarkMode;
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: CustomAppBar(
         title: "Home",
@@ -26,8 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {
                   Get.changeThemeMode(
                       isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                      isDarkMode = !isDarkMode;
-                      (context as Element).reassemble();
+                  isDarkMode = !isDarkMode;
+                  (context as Element).reassemble();
                 });
               },
               icon: isDarkMode
@@ -71,7 +69,49 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          CustomButton(title: "Submit", onTap: () {})
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SeeMoreButton(
+                onTap: () {
+                  print("See All");
+                },
+              ),
+              SizedBox(
+                height: 160,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    ImageCard(
+                      title: "Wash and Fold",
+                      imageUrl:
+                          "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
+                      ratings: 3.4,
+                    ),
+                    ImageCard(
+                      title: "Wash and Fold",
+                      imageUrl:
+                          "https://dev.kleen.lk/storage/services/img/hPw0vacwxfDeVhff9mvKxl8aF_1698878779.png",
+                      ratings: 3.4,
+                    ),
+                    ImageCard(
+                      title: "Wash and Fold",
+                      imageUrl:
+                          "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
+                      ratings: 3.4,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const ProductListTile(
+            title: "Dry Clean",
+            subtitle: "Dry your cloths fast",
+            imageUrl:
+                "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
+            rating: 3.5,
+          )
         ],
       ),
     );

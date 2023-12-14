@@ -5,6 +5,7 @@ import 'package:kleen/controllers/auth_controller.dart';
 
 import 'package:kleen/utils/custom/app_custom_widgets.dart';
 import 'package:kleen/views/screens/home/home_screen.dart';
+import 'package:kleen/views/screens/map/map_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/constant/app_constants.dart';
@@ -41,7 +42,18 @@ class SignInScreen extends StatelessWidget {
                       // _login(authController, emailController,
                       //     passwordController, context);
                       Navigator.push(context, MaterialPageRoute(builder: (c){
-                        return  HomeScreen();
+                        return  const HomeScreen();
+                      }));
+                    },
+                  ),
+                   CustomButton(
+                    title: "MAP SCREEN",
+                    isLoading: authController.isLoading,
+                    onTap: () {
+                      // _login(authController, emailController,
+                      //     passwordController, context);
+                      Navigator.push(context, MaterialPageRoute(builder: (c){
+                        return  const MapScreen();
                       }));
                     },
                   ),

@@ -296,14 +296,14 @@ class _ServiceCardState extends State<ServiceCard> {
         width: 200,
         decoration: BoxDecoration(
           border: appTheme.brightness == Brightness.dark
-              ? Border.all(width: 1, color: CustomColor.lightColor)
+              ? customBorder
               : null,
           color: _lightColor,
           borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
           boxShadow: [
             appTheme.brightness == Brightness.dark
                 ? const BoxShadow()
-                : boxShadow
+                : customBoxShadow
           ],
         ),
         child: Column(
@@ -508,14 +508,12 @@ class ImageCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Container(
         decoration: BoxDecoration(
-            border: appTheme.brightness == Brightness.dark
-                ?border
-                : null,
+            border: appTheme.brightness == Brightness.dark ? customBorder : null,
             borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
             boxShadow: [
               appTheme.brightness == Brightness.dark
                   ? const BoxShadow()
-                  : boxShadow,
+                  : customBoxShadow,
             ]),
         width: 150,
         height: 150,
@@ -563,21 +561,26 @@ class ImageCard extends StatelessWidget {
   }
 }
 
-class SeeAllButton extends StatelessWidget {
-  const SeeAllButton({super.key, required this.onTap});
+class SeeMoreButton extends StatelessWidget {
+  const SeeMoreButton({super.key, required this.onTap});
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5,left: 5,right: 10),
+      padding: const EdgeInsets.only(top: 5, left: 5, right: 10),
       child: GestureDetector(
         onTap: onTap,
-        child: Text("See All",
-            style: textStyleDefault(context).copyWith(
+        child: Text(
+          "See More",
+          style: textStyleDefault(context).copyWith(
+           
+            decoration: TextDecoration.underline,
+            decorationColor: CustomColor.primaryColor, 
+            decorationThickness: 2.0,
               color: CustomColor.primaryColor,
-              fontWeight: Dimensions.FONT_WEIGHT_LARGE
-            ),),
+              fontWeight: Dimensions.FONT_WEIGHT_LARGE),
+        ),
       ),
     );
   }
@@ -588,26 +591,29 @@ class BackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: (){
-      Navigator.pop(context);
-    }, icon: const Icon(Icons.arrow_back_ios));
+    return IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.arrow_back_ios));
   }
 }
-
-
 
 class BottomNavItem extends StatelessWidget {
   final IconData iconData;
   final Function? onTap;
   final bool isSelected;
-   const BottomNavItem({super.key, required this.iconData, this.onTap, this.isSelected = false});
+  const BottomNavItem(
+      {super.key, required this.iconData, this.onTap, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: IconButton(
-        icon: Icon(iconData, color: isSelected ? Theme.of(context).primaryColor : Colors.grey, size: 25),
-        onPressed: (){
+        icon: Icon(iconData,
+            color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+            size: 25),
+        onPressed: () {
           onTap;
         },
       ),
@@ -615,4 +621,78 @@ class BottomNavItem extends StatelessWidget {
   }
 }
 
+class ProductListTile extends StatelessWidget {
+  const ProductListTile(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.imageUrl,
+      this.action,
+      required this.rating});
+  final String title;
+  final String subtitle;
+  final String imageUrl;
+  final VoidCallback? action;
+  final double rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border.symmetric(
+            horizontal: BorderSide(color: CustomColor.customGrey, width: 0.4),
+          ),
+        ),
+        child: ListTile(
+            onTap: action,
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            title: Text(
+              title,
+              style: textStyleDefault(context),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  subtitle,
+                  style: textStyleSmall(context)
+                      .copyWith(color: CustomColor.customGrey),
+                ),
+                RatingBar(
+                  rating: rating,
+                  ratingCount: 0,
+                  size: 13,
+                ),
+              ],
+            ),
+            trailing: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(
+                  Icons.add,
+                  color: CustomColor.customGrey,
+                ),
+                Icon(
+                  Icons.favorite_outline,
+                  color: CustomColor.customGrey,
+                ),
+              ],
+            ),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+              child: CustomImage(
+                image: imageUrl,
+                height: 50,
+                width: 50,
+                fit: BoxFit.cover,
+              ),
+            )),
+      ),
+    );
+  }
+}
 

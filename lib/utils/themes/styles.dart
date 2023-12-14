@@ -29,12 +29,12 @@ TextStyle textStyleLarge(BuildContext context) {
 
 
 
-const boxShadow = BoxShadow(
+const customBoxShadow = BoxShadow(
   color: CustomColor.customGrey,
   spreadRadius: 1,
   blurRadius: 4,
   offset: Offset(0, 3), // changes position of shadow
 );
 
- Border border = Border.all(width: 0.5, color: CustomColor.lightColor);
+ Border customBorder = Border.all(width: 0.5, color: CustomColor.customGrey);
               

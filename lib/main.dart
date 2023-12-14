@@ -9,6 +9,7 @@ import 'package:kleen/views/screens/auth/sign_in_screen.dart';
 
 
 
+
 void main()async {
    WidgetsFlutterBinding.ensureInitialized();
  await  getInitialize();
@@ -17,7 +18,7 @@ void main()async {
       debugShowCheckedModeBanner: false,
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme ,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       home: const SignInScreen(),
     ),
   );
