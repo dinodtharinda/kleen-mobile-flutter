@@ -1,10 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="kleen"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"
         >
+          <meta-data android:name="com.google.android.geo.API_KEY" 
+            android:value="AIzaSyAm3x2U0R1XRmkCrA-xmcgrLNGyeZm_nxk"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

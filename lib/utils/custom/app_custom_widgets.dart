@@ -1,10 +1,11 @@
 // ignore_for_file: avoid_print, prefer_function_declarations_over_variables, no_leading_underscores_for_local_identifiers, unused_local_variable, unused_field, dead_code
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import '../constant/dimensions.dart';
 import '../constant/images.dart';
-import '../themes/app_colors.dart';
+import '../themes/colors.dart';
 import '../themes/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -13,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title = "",
     this.actions = const [],
     this.leading = const SizedBox(),
-    this.fontWeight = Dimensions.FONT_WEIGHT_DEFAULT,
+    this.fontWeight = Dime.FONT_WEIGHT_DEFAULT,
   });
   final String title;
   final List<Widget> actions;
@@ -23,12 +24,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
     return AppBar(
       centerTitle: true,
       actions: actions,
       leading: leading,
       elevation: 0,
-      title: Text(title, style: textStyleDefault),
+      title: Text(
+        title,
+        style: textStyleLarge(context).copyWith(color: _darkColor),
+      ),
     );
   }
 
@@ -68,7 +74,7 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: isLoading || disabled ? color.withOpacity(0.6) : color,
           borderRadius: BorderRadius.circular(
-            Dimensions.RADIUS_SMALL,
+            Dime.RADIUS_SMALL,
           ),
         ),
         child: Center(
@@ -83,7 +89,8 @@ class CustomButton extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style:textStyleDefault.copyWith(color: _lightColor),
+                    style: textStyleDefault(context)
+                        .copyWith(color: CustomColor.lightColor),
                   )),
       ),
     );
@@ -133,21 +140,22 @@ class _CustomFieldState extends State<CustomField> {
         controller: widget.controller,
         focusNode: _focusNode,
         textAlignVertical: TextAlignVertical.center,
-        style: textStyleDefault.copyWith(color: _darkColor),
+        style: textStyleDefault(context).copyWith(color: _darkColor),
         cursorColor: CustomColor.customGrey,
         cursorWidth: 0.9,
         decoration: InputDecoration(
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle: textStyleDefault.copyWith(color: CustomColor.customGrey),
+          hintStyle:
+              textStyleDefault(context).copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
               CustomColor.customGrey,
           prefixIcon: Icon(
             widget.icon,
-            size: Dimensions.R_ICON_SIZE(context),
+            size: Dime.R_ICON_SIZE(context),
           ),
           focusColor: CustomColor.primaryColor,
           focusedBorder: const OutlineInputBorder(
@@ -209,7 +217,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         controller: widget.controller,
         focusNode: _focusNode,
         textAlignVertical: TextAlignVertical.center,
-        style: textStyleDefault.copyWith(color: _darkColor),
+        style: textStyleDefault(context).copyWith(color: _darkColor),
         cursorColor: CustomColor.customGrey,
         cursorWidth: 0.9,
         obscureText: !_showPassword,
@@ -217,14 +225,15 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           filled: true,
           fillColor: CustomColor.customGrey.withOpacity(0.154),
           hintText: widget.hint,
-          hintStyle:textStyleDefault.copyWith(color: CustomColor.customGrey),
+          hintStyle:
+              textStyleDefault(context).copyWith(color: CustomColor.customGrey),
           contentPadding: EdgeInsetsDirectional.zero,
           prefixIconColor:
               // _isFocused ? CustomColor.primaryColor :
               CustomColor.customGrey,
           prefixIcon: Icon(
             widget.icon,
-            size: Dimensions.R_ICON_SIZE(context),
+            size: Dime.R_ICON_SIZE(context),
           ),
           focusColor: CustomColor.primaryColor,
           focusedBorder: const OutlineInputBorder(
@@ -239,7 +248,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           suffixIcon: IconButton(
             icon: Icon(
               _showPassword ? Icons.visibility : Icons.visibility_off,
-              size: Dimensions.R_ICON_SIZE(context),
+              size: Dime.R_ICON_SIZE(context),
               color: CustomColor.customGrey,
             ),
             onPressed: () {
@@ -276,22 +285,24 @@ class ServiceCard extends StatefulWidget {
 
 class _ServiceCardState extends State<ServiceCard> {
   bool _isLiked = false;
+
   @override
   Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    ThemeData appTheme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          color: CustomColor.lightColor,
-          borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+          border: appTheme.brightness == Brightness.dark ? customBorder : null,
+          color: _lightColor,
+          borderRadius: BorderRadius.circular(Dime.RADIUS_SMALL),
           boxShadow: [
-            BoxShadow(
-              color: CustomColor.customGrey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
+            appTheme.brightness == Brightness.dark
+                ? const BoxShadow()
+                : customBoxShadow
           ],
         ),
         child: Column(
@@ -299,10 +310,10 @@ class _ServiceCardState extends State<ServiceCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Stack(fit: StackFit.passthrough, children: [
+              Stack(children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(Dimensions.RADIUS_SMALL)),
+                      top: Radius.circular(Dime.RADIUS_SMALL)),
                   child: CustomImage(
                     image: widget.imageUrl,
                     height: 80,
@@ -311,8 +322,8 @@ class _ServiceCardState extends State<ServiceCard> {
                   ),
                 ),
                 Positioned(
-                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    top: Dime.PADDING_SIZE_EXTRA_SMALL,
+                    right: Dime.PADDING_SIZE_EXTRA_SMALL,
                     child: InkWell(
                       onTap: () {
                         setState(() {
@@ -320,12 +331,12 @@ class _ServiceCardState extends State<ServiceCard> {
                         });
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(
-                            Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                        padding:
+                            const EdgeInsets.all(Dime.PADDING_SIZE_EXTRA_SMALL),
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius:
-                              BorderRadius.circular(Dimensions.RADIUS_SMALL),
+                              BorderRadius.circular(Dime.RADIUS_SMALL),
                         ),
                         child: Icon(
                           _isLiked ? Icons.favorite : Icons.favorite_border,
@@ -337,33 +348,36 @@ class _ServiceCardState extends State<ServiceCard> {
                       ),
                     )),
               ]),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                  left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                ),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(widget.title,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    right: Dime.PADDING_SIZE_EXTRA_SMALL,
+                    left: Dime.PADDING_SIZE_EXTRA_SMALL,
+                  ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(widget.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: textStyleDefault(context)
+                                .copyWith(color: _darkColor)),
+                        Text(
+                          widget.description,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: textStyleDefault),
-                      Text(
-                        widget.description,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textStyleSmall.copyWith(
-                            color: Theme.of(context).disabledColor),
-                      ),
-                      RatingBar(
-                        rating: widget.rating,
-                        ratingCount: widget.ratingCount,
-                        size: 12,
-                      ),
-                    ]),
+                          style: textStyleSmall(context)
+                              .copyWith(color: CustomColor.customGrey),
+                        ),
+                        RatingBar(
+                          rating: widget.rating,
+                          ratingCount: widget.ratingCount,
+                          size: 12,
+                        ),
+                      ]),
+                ),
               ),
             ]),
       ),
@@ -415,11 +429,11 @@ class RatingBar extends StatelessWidget {
     List<Widget> _starList = [];
     int realNumber = rating.floor();
     int partNumber = ((rating - realNumber) * 10).ceil();
+    Color startColor = Colors.yellow;
 
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
-        _starList.add(Icon(Icons.star,
-            color: Theme.of(context).primaryColor, size: size));
+        _starList.add(Icon(Icons.star, color: startColor, size: size));
       } else if (i == realNumber) {
         _starList.add(SizedBox(
           height: size,
@@ -427,8 +441,7 @@ class RatingBar extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Icon(Icons.star,
-                  color: Theme.of(context).primaryColor, size: size),
+              Icon(Icons.star, color: startColor, size: size),
               ClipRect(
                 clipper: _Clipper(part: partNumber),
                 child: Icon(Icons.star, color: Colors.grey, size: size),
@@ -442,12 +455,10 @@ class RatingBar extends StatelessWidget {
     }
     ratingCount > 0
         ? _starList.add(Padding(
-            padding: const EdgeInsets.only(
-                left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            padding: const EdgeInsets.only(left: Dime.PADDING_SIZE_EXTRA_SMALL),
             child: Text(
               " $ratingCount",
-              style: textStyleSmall.copyWith(
-                  color: Theme.of(context).disabledColor),
+              style: textStyleSmall(context).copyWith(color: startColor),
             ),
           ))
         : const SizedBox();
@@ -474,4 +485,468 @@ class _Clipper extends CustomClipper<Rect> {
 
   @override
   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
+}
+
+class ImageCard extends StatelessWidget {
+  const ImageCard(
+      {super.key,
+      required this.title,
+      required this.ratings,
+      required this.imageUrl});
+  final String title;
+  final double ratings;
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    ThemeData appTheme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        decoration: BoxDecoration(
+            border:
+                appTheme.brightness == Brightness.dark ? customBorder : null,
+            borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
+            boxShadow: [
+              appTheme.brightness == Brightness.dark
+                  ? const BoxShadow()
+                  : customBoxShadow,
+            ]),
+        width: 150,
+        height: 150,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
+              child: CustomImage(
+                image: imageUrl,
+                fit: BoxFit.cover,
+                width: 150,
+                height: 150,
+              ),
+            ),
+            Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
+                gradient: LinearGradient(colors: [
+                  CustomColor.backColor.withOpacity(0.7),
+                  CustomColor.backColor.withOpacity(0.1)
+                ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    title,
+                    style: textStyleLarge(context).copyWith(
+                        color: CustomColor.lightColor,
+                        fontWeight: Dime.FONT_WEIGHT_LARGE),
+                  ),
+                  RatingBar(rating: ratings, ratingCount: 0),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SeeMoreButton extends StatelessWidget {
+  const SeeMoreButton({super.key, required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, left: 5, right: 10),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Text(
+          "See More",
+          style: textStyleDefault(context).copyWith(
+              decoration: TextDecoration.underline,
+              decorationColor: CustomColor.primaryColor,
+              decorationThickness: 2.0,
+              color: CustomColor.primaryColor,
+              fontWeight: Dime.FONT_WEIGHT_LARGE),
+        ),
+      ),
+    );
+  }
+}
+
+class BackWidget extends StatelessWidget {
+  const BackWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.arrow_back_ios));
+  }
+}
+
+class BottomNavItem extends StatelessWidget {
+  final IconData iconData;
+  final VoidCallback? onTap;
+  final bool isSelected;
+  const BottomNavItem(
+      {super.key, required this.iconData, this.onTap, this.isSelected = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: IconButton(
+          icon: Icon(iconData,
+              color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+              size: 25),
+          onPressed: onTap),
+    );
+  }
+}
+
+class ProductListTile extends StatelessWidget {
+  const ProductListTile(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.imageUrl,
+      this.action,
+      required this.rating});
+  final String title;
+  final String subtitle;
+  final String imageUrl;
+  final VoidCallback? action;
+  final double rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border.symmetric(
+            horizontal: BorderSide(color: CustomColor.customGrey, width: 0.4),
+          ),
+        ),
+        child: ListTile(
+            onTap: action,
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: Dime.PADDING_SIZE_DEFAULT,
+                vertical: Dime.PADDING_SIZE_EXTRA_SMALL),
+            title: Text(
+              title,
+              style: textStyleDefault(context),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  subtitle,
+                  style: textStyleSmall(context)
+                      .copyWith(color: CustomColor.customGrey),
+                ),
+                RatingBar(
+                  rating: rating,
+                  ratingCount: 0,
+                  size: 13,
+                ),
+              ],
+            ),
+            trailing: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(
+                  Icons.add,
+                  color: CustomColor.customGrey,
+                ),
+                Icon(
+                  Icons.favorite_outline,
+                  color: CustomColor.customGrey,
+                ),
+              ],
+            ),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(Dime.RADIUS_SMALL),
+              child: CustomImage(
+                image: imageUrl,
+                height: 50,
+                width: 50,
+                fit: BoxFit.cover,
+              ),
+            )),
+      ),
+    );
+  }
+}
+
+class CartTile extends StatefulWidget {
+  const CartTile(
+      {super.key,
+      required this.quantity,
+      this.add,
+      this.remove,
+      required this.title,
+      required this.price});
+  final int quantity;
+  final VoidCallback? add;
+  final VoidCallback? remove;
+  final String title;
+  final double price;
+
+  @override
+  State<CartTile> createState() => _CartTileState();
+}
+
+class _CartTileState extends State<CartTile> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          const EdgeInsets.all( Dime.PADDING_SIZE_DEFAULT ),
+      
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        SizedBox(
+          width: Dime.SCREEN_WIDTH(context) * 0.3,
+          child: Text(
+            widget.title,
+            style: textStyleDefault(context).copyWith(
+              fontWeight: Dime.FONT_WEIGHT_MEDIUM,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        SizedBox(
+          child: Text(
+            formatPrice(widget.price),
+            style: textStyleDefault(context).copyWith(
+              color: CustomColor.customGrey,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: Dime.SCREEN_WIDTH(context) * 0.25,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              RoundedIconButton(
+                icon: Icons.remove,
+                onTap: widget.remove,
+                isDisable: widget.quantity <= 0,
+              ),
+              Text(
+                widget.quantity.toString(),
+                style: textStyleDefault(context).copyWith(
+                  fontWeight: Dime.FONT_WEIGHT_MEDIUM,
+                ),
+              ),
+              RoundedIconButton(
+                icon: Icons.add,
+                onTap: widget.add,
+              ),
+            ],
+          ),
+        )
+      ]),
+    );
+  }
+}
+
+class RoundedIconButton extends StatelessWidget {
+  const RoundedIconButton(
+      {super.key,
+      required this.icon,
+      this.color = CustomColor.primaryColor,
+      this.onTap,
+      this.isDisable = false});
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onTap;
+  final bool isDisable;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    return GestureDetector(
+      onTap: !isDisable ? onTap : null,
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        width: 20,
+        height: 20,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isDisable ? color.withOpacity(0.5) : color,
+        ),
+        child: FittedBox(
+            child: Icon(
+          icon,
+          color: _lightColor,
+        )),
+      ),
+    );
+  }
+}
+
+class CustomSlider extends StatefulWidget {
+  const CustomSlider({super.key, required this.items});
+  final List<Widget> items;
+
+  @override
+  State<CustomSlider> createState() => _CustomSliderState();
+}
+
+class _CustomSliderState extends State<CustomSlider> {
+  int _index = 0;
+  final CarouselController _carouselController = CarouselController();
+
+  bool _isSelected = false;
+  @override
+  Widget build(BuildContext context) {
+    final _items = widget.items;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CarouselSlider(
+            carouselController: _carouselController,
+            items: widget.items,
+            options: CarouselOptions(
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  print(index);
+                  _index = index;
+                });
+              },
+            )),
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          for (int i = 0; i < _items.length; i++)
+            SliderDots(
+              isSelected: i == _index,
+              onTap: () {},
+            )
+        ]),
+        const SizedBox(
+          height: 10,
+        )
+      ],
+    );
+  }
+}
+
+class SliderDots extends StatelessWidget {
+  const SliderDots({super.key, this.isSelected = false, this.onTap});
+  final bool isSelected;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        width: isSelected ? 30 : 15,
+        height: 7,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: isSelected
+              ? const Color.fromARGB(255, 115, 115, 115)
+              : CustomColor.customGrey,
+        ),
+      ),
+    );
+  }
+}
+
+class BannerCard extends StatelessWidget {
+  const BannerCard({super.key, required this.title, required this.subtitle});
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    return Container(
+      margin: const EdgeInsets.all(Dime.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.all(Dime.PADDING_SIZE_LARGE),
+      width: Dime.SCREEN_WIDTH(context) * 0.8,
+      height: Dime.SCREEN_WIDTH(context) * 0.5,
+      decoration: BoxDecoration(
+        color: CustomColor.primaryColor,
+        borderRadius: BorderRadius.circular(
+          Dime.PADDING_SIZE_DEFAULT,
+        ),
+      ),
+      child: Column(children: [
+        Text(
+          title,
+          style: textStyleExtraLarge(context).copyWith(color: _lightColor),
+        ),
+        Text(
+          subtitle,
+          textAlign: TextAlign.center,
+          style: textStyleLarge(context).copyWith(
+            color: _lightColor,
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class SmallCard extends StatefulWidget {
+  const SmallCard({super.key});
+
+  @override
+  State<SmallCard> createState() => _SmallCardState();
+}
+
+class _SmallCardState extends State<SmallCard> {
+  bool isSelected = false;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isSelected = !isSelected;
+            });
+          },
+          child: Container(
+            margin: const EdgeInsets.all(2),
+            height: Dime.SCREEN_WIDTH(context) * 0.2,
+            width: Dime.SCREEN_WIDTH(context) * 0.2,
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? CustomColor.primaryColor
+                  : CustomColor.customGrey,
+              borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
+            ),
+          ),
+        ),
+        Text(
+          "Wash & Iron",
+          style: textStyleDefault(context).copyWith(
+            fontWeight: Dime.FONT_WEIGHT_MEDIUM,
+          ),
+        )
+      ],
+    );
+  }
 }
