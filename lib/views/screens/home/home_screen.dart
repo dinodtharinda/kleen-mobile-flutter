@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _quantity = 0;
   bool isDarkMode = Get.isDarkMode;
   @override
   Widget build(BuildContext context) {
@@ -33,87 +34,147 @@ class _HomeScreenState extends State<HomeScreen> {
                   : const Icon(Icons.dark_mode))
         ],
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 150,
-            child: ListView(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: const [
-                ServiceCard(
-                  title: "Dry Clean",
-                  description: "Dry Clean your Cloths",
-                  rating: 3.5,
-                  ratingCount: 3.5,
-                  imageUrl:
-                      "https://www.marthastewart.com/thmb/dM_cqMBhlcmnUpRSH4NaVIZ6r3s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/our-best-laundry-tips-sort-colors-whites-getty-0923-19487a0ec97d4b67bf4810505285dba9.jpg",
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 150,
+              child: ListView(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  ServiceCard(
+                    title: "Dry Clean",
+                    description: "Dry Clean your Cloths",
+                    rating: 3.5,
+                    ratingCount: 3.5,
+                    imageUrl:
+                        "https://www.marthastewart.com/thmb/dM_cqMBhlcmnUpRSH4NaVIZ6r3s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/our-best-laundry-tips-sort-colors-whites-getty-0923-19487a0ec97d4b67bf4810505285dba9.jpg",
+                  ),
+                  ServiceCard(
+                    title: "Dry Clean",
+                    description: "Dry Clean your Cloths",
+                    rating: 3.5,
+                    ratingCount: 3.5,
+                    imageUrl:
+                        "https://www.marthastewart.com/thmb/dM_cqMBhlcmnUpRSH4NaVIZ6r3s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/our-best-laundry-tips-sort-colors-whites-getty-0923-19487a0ec97d4b67bf4810505285dba9.jpg",
+                  ),
+                  ServiceCard(
+                    title: "Dry Clean",
+                    description: "Dry Clean your Cloths",
+                    rating: 3.5,
+                    ratingCount: 3.5,
+                    imageUrl:
+                        "https://www.marthastewart.com/thmb/dM_cqMBhlcmnUpRSH4NaVIZ6r3s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/our-best-laundry-tips-sort-colors-whites-getty-0923-19487a0ec97d4b67bf4810505285dba9.jpg",
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SeeMoreButton(
+                  onTap: () {
+                    print("See All");
+                  },
                 ),
-                ServiceCard(
-                  title: "Dry Clean",
-                  description: "Dry Clean your Cloths",
-                  rating: 3.5,
-                  ratingCount: 3.5,
-                  imageUrl:
-                      "https://www.marthastewart.com/thmb/dM_cqMBhlcmnUpRSH4NaVIZ6r3s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/our-best-laundry-tips-sort-colors-whites-getty-0923-19487a0ec97d4b67bf4810505285dba9.jpg",
-                ),
-                ServiceCard(
-                  title: "Dry Clean",
-                  description: "Dry Clean your Cloths",
-                  rating: 3.5,
-                  ratingCount: 3.5,
-                  imageUrl:
-                      "https://www.marthastewart.com/thmb/dM_cqMBhlcmnUpRSH4NaVIZ6r3s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/our-best-laundry-tips-sort-colors-whites-getty-0923-19487a0ec97d4b67bf4810505285dba9.jpg",
+                SizedBox(
+                  height: 160,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: const [
+                      ImageCard(
+                        title: "Wash and Fold",
+                        imageUrl:
+                            "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
+                        ratings: 3.4,
+                      ),
+                      ImageCard(
+                        title: "Wash and Fold",
+                        imageUrl:
+                            "https://dev.kleen.lk/storage/services/img/hPw0vacwxfDeVhff9mvKxl8aF_1698878779.png",
+                        ratings: 3.4,
+                      ),
+                      ImageCard(
+                        title: "Wash and Fold",
+                        imageUrl:
+                            "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
+                        ratings: 3.4,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              SeeMoreButton(
-                onTap: () {
-                  print("See All");
-                },
+            const ProductListTile(
+              title: "Dry Clean",
+              subtitle: "Dry your cloths fast",
+              imageUrl:
+                  "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
+              rating: 3.5,
+            ),
+            const BannerCard(
+              title: "SPECIAL DEAL",
+              subtitle: "Get 20% Off on your first order & Free Delivery",
+            ),
+            const CustomSlider(items: [
+              BannerCard(
+                title: "SPECIAL DEAL",
+                subtitle: "Get 20% Off on your first order & Free Delivery",
               ),
-              SizedBox(
-                height: 160,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    ImageCard(
-                      title: "Wash and Fold",
-                      imageUrl:
-                          "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
-                      ratings: 3.4,
-                    ),
-                    ImageCard(
-                      title: "Wash and Fold",
-                      imageUrl:
-                          "https://dev.kleen.lk/storage/services/img/hPw0vacwxfDeVhff9mvKxl8aF_1698878779.png",
-                      ratings: 3.4,
-                    ),
-                    ImageCard(
-                      title: "Wash and Fold",
-                      imageUrl:
-                          "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
-                      ratings: 3.4,
-                    ),
-                  ],
-                ),
+              BannerCard(
+                title: "SPECIAL DEAL",
+                subtitle: "Get 20% Off on your first order & Free Delivery",
               ),
-            ],
-          ),
-          const ProductListTile(
-            title: "Dry Clean",
-            subtitle: "Dry your cloths fast",
-            imageUrl:
-                "https://dev.kleen.lk/storage/services/img/CrQuzUqbYS4kst2vQoTxbdsPQ_1698878794.png",
-            rating: 3.5,
-          )
-        ],
+              BannerCard(
+                title: "SPECIAL DEAL",
+                subtitle: "Get 20% Off on your first order & Free Delivery",
+              ),
+              BannerCard(
+                title: "SPECIAL DEAL",
+                subtitle: "Get 20% Off on your first order & Free Delivery",
+              ),
+              BannerCard(
+                title: "SPECIAL DEAL",
+                subtitle: "Get 20% Off on your first order & Free Delivery",
+              ),
+            ]),
+            SmallCard(),
+            const SizedBox(
+              height: 10,
+            ),
+            CartTile(
+              title: "White Color T shirt",
+              price: 750,
+              quantity: _quantity,
+              remove: () {
+                setState(() {
+                  _quantity--;
+                });
+              },
+              add: () {
+                setState(() {
+                  _quantity++;
+                });
+              },
+            ),
+            CartTile(
+              title: "White Color T shirt",
+              price: 750,
+              quantity:_quantity,
+              remove: () {
+                _quantity--;
+              },
+              add: () {
+                _quantity++;
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+//  "SPECIAL DEAL"
+//  "Get 20% Off on your first order & Free Delivery"

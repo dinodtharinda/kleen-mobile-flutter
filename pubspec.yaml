@@ -18,6 +18,8 @@ dependencies:
   cached_network_image: ^3.3.0
   google_maps_flutter: ^2.5.0
   google_maps_flutter_platform_interface: ^2.4.1
+  carousel_slider: ^4.2.1
+  intl: ^0.19.0
   
 dev_dependencies:
   flutter_test:
@@ -36,9 +38,9 @@ flutter:
       fonts:
         - asset: assets/font/Roboto-Regular.ttf
           weight: 400
-        # - asset: assets/font/Roboto-Medium.ttf
-        #   weight: 500
-        # - asset: assets/font/Roboto-Bold.ttf
-        #   weight: 700
-        # - asset: assets/font/Roboto-Black.ttf
-        #   weight: 900
+        - asset: assets/font/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/font/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/font/Roboto-Black.ttf
+          weight: 900

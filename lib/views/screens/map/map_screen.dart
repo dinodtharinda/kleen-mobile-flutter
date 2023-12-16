@@ -12,11 +12,11 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? mapController;
-  Set<Marker> _markers = Set.of([]);
+  final Set<Marker> _markers = Set.of([]);
   @override
   Widget build(BuildContext context) {
     void addMarker(LatLng location) {
-    final MarkerId markerId = const MarkerId('1');
+    const MarkerId markerId = MarkerId('1');
     final Marker marker = Marker(
       markerId: markerId,
       position: location,
@@ -35,9 +35,6 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
     return Scaffold(
-        appBar: const CustomAppBar(
-          leading: BackWidget(),
-        ),
 
         // bottomNavigationBar:
         body: Stack(

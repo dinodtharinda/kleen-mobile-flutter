@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, prefer_function_declarations_over_variables, no_leading_underscores_for_local_identifiers, unused_local_variable, unused_field, dead_code
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import '../constant/dimensions.dart';
 import '../constant/images.dart';
@@ -13,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title = "",
     this.actions = const [],
     this.leading = const SizedBox(),
-    this.fontWeight = Dimensions.FONT_WEIGHT_DEFAULT,
+    this.fontWeight = Dime.FONT_WEIGHT_DEFAULT,
   });
   final String title;
   final List<Widget> actions;
@@ -73,7 +74,7 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: isLoading || disabled ? color.withOpacity(0.6) : color,
           borderRadius: BorderRadius.circular(
-            Dimensions.RADIUS_SMALL,
+            Dime.RADIUS_SMALL,
           ),
         ),
         child: Center(
@@ -154,7 +155,7 @@ class _CustomFieldState extends State<CustomField> {
               CustomColor.customGrey,
           prefixIcon: Icon(
             widget.icon,
-            size: Dimensions.R_ICON_SIZE(context),
+            size: Dime.R_ICON_SIZE(context),
           ),
           focusColor: CustomColor.primaryColor,
           focusedBorder: const OutlineInputBorder(
@@ -232,7 +233,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
               CustomColor.customGrey,
           prefixIcon: Icon(
             widget.icon,
-            size: Dimensions.R_ICON_SIZE(context),
+            size: Dime.R_ICON_SIZE(context),
           ),
           focusColor: CustomColor.primaryColor,
           focusedBorder: const OutlineInputBorder(
@@ -247,7 +248,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           suffixIcon: IconButton(
             icon: Icon(
               _showPassword ? Icons.visibility : Icons.visibility_off,
-              size: Dimensions.R_ICON_SIZE(context),
+              size: Dime.R_ICON_SIZE(context),
               color: CustomColor.customGrey,
             ),
             onPressed: () {
@@ -295,11 +296,9 @@ class _ServiceCardState extends State<ServiceCard> {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          border: appTheme.brightness == Brightness.dark
-              ? customBorder
-              : null,
+          border: appTheme.brightness == Brightness.dark ? customBorder : null,
           color: _lightColor,
-          borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+          borderRadius: BorderRadius.circular(Dime.RADIUS_SMALL),
           boxShadow: [
             appTheme.brightness == Brightness.dark
                 ? const BoxShadow()
@@ -314,7 +313,7 @@ class _ServiceCardState extends State<ServiceCard> {
               Stack(children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(Dimensions.RADIUS_SMALL)),
+                      top: Radius.circular(Dime.RADIUS_SMALL)),
                   child: CustomImage(
                     image: widget.imageUrl,
                     height: 80,
@@ -323,8 +322,8 @@ class _ServiceCardState extends State<ServiceCard> {
                   ),
                 ),
                 Positioned(
-                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    top: Dime.PADDING_SIZE_EXTRA_SMALL,
+                    right: Dime.PADDING_SIZE_EXTRA_SMALL,
                     child: InkWell(
                       onTap: () {
                         setState(() {
@@ -332,12 +331,12 @@ class _ServiceCardState extends State<ServiceCard> {
                         });
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(
-                            Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                        padding:
+                            const EdgeInsets.all(Dime.PADDING_SIZE_EXTRA_SMALL),
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius:
-                              BorderRadius.circular(Dimensions.RADIUS_SMALL),
+                              BorderRadius.circular(Dime.RADIUS_SMALL),
                         ),
                         child: Icon(
                           _isLiked ? Icons.favorite : Icons.favorite_border,
@@ -352,8 +351,8 @@ class _ServiceCardState extends State<ServiceCard> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    right: Dime.PADDING_SIZE_EXTRA_SMALL,
+                    left: Dime.PADDING_SIZE_EXTRA_SMALL,
                   ),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -456,8 +455,7 @@ class RatingBar extends StatelessWidget {
     }
     ratingCount > 0
         ? _starList.add(Padding(
-            padding: const EdgeInsets.only(
-                left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            padding: const EdgeInsets.only(left: Dime.PADDING_SIZE_EXTRA_SMALL),
             child: Text(
               " $ratingCount",
               style: textStyleSmall(context).copyWith(color: startColor),
@@ -508,8 +506,9 @@ class ImageCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Container(
         decoration: BoxDecoration(
-            border: appTheme.brightness == Brightness.dark ? customBorder : null,
-            borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+            border:
+                appTheme.brightness == Brightness.dark ? customBorder : null,
+            borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
             boxShadow: [
               appTheme.brightness == Brightness.dark
                   ? const BoxShadow()
@@ -520,7 +519,7 @@ class ImageCard extends StatelessWidget {
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+              borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
               child: CustomImage(
                 image: imageUrl,
                 fit: BoxFit.cover,
@@ -532,7 +531,7 @@ class ImageCard extends StatelessWidget {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+                borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
                 gradient: LinearGradient(colors: [
                   CustomColor.backColor.withOpacity(0.7),
                   CustomColor.backColor.withOpacity(0.1)
@@ -545,7 +544,7 @@ class ImageCard extends StatelessWidget {
                     title,
                     style: textStyleLarge(context).copyWith(
                         color: CustomColor.lightColor,
-                        fontWeight: Dimensions.FONT_WEIGHT_LARGE),
+                        fontWeight: Dime.FONT_WEIGHT_LARGE),
                   ),
                   RatingBar(rating: ratings, ratingCount: 0),
                   const SizedBox(
@@ -574,12 +573,11 @@ class SeeMoreButton extends StatelessWidget {
         child: Text(
           "See More",
           style: textStyleDefault(context).copyWith(
-           
-            decoration: TextDecoration.underline,
-            decorationColor: CustomColor.primaryColor, 
-            decorationThickness: 2.0,
+              decoration: TextDecoration.underline,
+              decorationColor: CustomColor.primaryColor,
+              decorationThickness: 2.0,
               color: CustomColor.primaryColor,
-              fontWeight: Dimensions.FONT_WEIGHT_LARGE),
+              fontWeight: Dime.FONT_WEIGHT_LARGE),
         ),
       ),
     );
@@ -601,7 +599,7 @@ class BackWidget extends StatelessWidget {
 
 class BottomNavItem extends StatelessWidget {
   final IconData iconData;
-  final Function? onTap;
+  final VoidCallback? onTap;
   final bool isSelected;
   const BottomNavItem(
       {super.key, required this.iconData, this.onTap, this.isSelected = false});
@@ -610,13 +608,10 @@ class BottomNavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: IconButton(
-        icon: Icon(iconData,
-            color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
-            size: 25),
-        onPressed: () {
-          onTap;
-        },
-      ),
+          icon: Icon(iconData,
+              color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+              size: 25),
+          onPressed: onTap),
     );
   }
 }
@@ -648,8 +643,8 @@ class ProductListTile extends StatelessWidget {
         child: ListTile(
             onTap: action,
             contentPadding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                horizontal: Dime.PADDING_SIZE_DEFAULT,
+                vertical: Dime.PADDING_SIZE_EXTRA_SMALL),
             title: Text(
               title,
               style: textStyleDefault(context),
@@ -683,7 +678,7 @@ class ProductListTile extends StatelessWidget {
               ],
             ),
             leading: ClipRRect(
-              borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+              borderRadius: BorderRadius.circular(Dime.RADIUS_SMALL),
               child: CustomImage(
                 image: imageUrl,
                 height: 50,
@@ -696,3 +691,262 @@ class ProductListTile extends StatelessWidget {
   }
 }
 
+class CartTile extends StatefulWidget {
+  const CartTile(
+      {super.key,
+      required this.quantity,
+      this.add,
+      this.remove,
+      required this.title,
+      required this.price});
+  final int quantity;
+  final VoidCallback? add;
+  final VoidCallback? remove;
+  final String title;
+  final double price;
+
+  @override
+  State<CartTile> createState() => _CartTileState();
+}
+
+class _CartTileState extends State<CartTile> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          const EdgeInsets.all( Dime.PADDING_SIZE_DEFAULT ),
+      
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        SizedBox(
+          width: Dime.SCREEN_WIDTH(context) * 0.3,
+          child: Text(
+            widget.title,
+            style: textStyleDefault(context).copyWith(
+              fontWeight: Dime.FONT_WEIGHT_MEDIUM,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        SizedBox(
+          child: Text(
+            formatPrice(widget.price),
+            style: textStyleDefault(context).copyWith(
+              color: CustomColor.customGrey,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: Dime.SCREEN_WIDTH(context) * 0.25,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              RoundedIconButton(
+                icon: Icons.remove,
+                onTap: widget.remove,
+                isDisable: widget.quantity <= 0,
+              ),
+              Text(
+                widget.quantity.toString(),
+                style: textStyleDefault(context).copyWith(
+                  fontWeight: Dime.FONT_WEIGHT_MEDIUM,
+                ),
+              ),
+              RoundedIconButton(
+                icon: Icons.add,
+                onTap: widget.add,
+              ),
+            ],
+          ),
+        )
+      ]),
+    );
+  }
+}
+
+class RoundedIconButton extends StatelessWidget {
+  const RoundedIconButton(
+      {super.key,
+      required this.icon,
+      this.color = CustomColor.primaryColor,
+      this.onTap,
+      this.isDisable = false});
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onTap;
+  final bool isDisable;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    return GestureDetector(
+      onTap: !isDisable ? onTap : null,
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        width: 20,
+        height: 20,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isDisable ? color.withOpacity(0.5) : color,
+        ),
+        child: FittedBox(
+            child: Icon(
+          icon,
+          color: _lightColor,
+        )),
+      ),
+    );
+  }
+}
+
+class CustomSlider extends StatefulWidget {
+  const CustomSlider({super.key, required this.items});
+  final List<Widget> items;
+
+  @override
+  State<CustomSlider> createState() => _CustomSliderState();
+}
+
+class _CustomSliderState extends State<CustomSlider> {
+  int _index = 0;
+  final CarouselController _carouselController = CarouselController();
+
+  bool _isSelected = false;
+  @override
+  Widget build(BuildContext context) {
+    final _items = widget.items;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CarouselSlider(
+            carouselController: _carouselController,
+            items: widget.items,
+            options: CarouselOptions(
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  print(index);
+                  _index = index;
+                });
+              },
+            )),
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          for (int i = 0; i < _items.length; i++)
+            SliderDots(
+              isSelected: i == _index,
+              onTap: () {},
+            )
+        ]),
+        const SizedBox(
+          height: 10,
+        )
+      ],
+    );
+  }
+}
+
+class SliderDots extends StatelessWidget {
+  const SliderDots({super.key, this.isSelected = false, this.onTap});
+  final bool isSelected;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        width: isSelected ? 30 : 15,
+        height: 7,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: isSelected
+              ? const Color.fromARGB(255, 115, 115, 115)
+              : CustomColor.customGrey,
+        ),
+      ),
+    );
+  }
+}
+
+class BannerCard extends StatelessWidget {
+  const BannerCard({super.key, required this.title, required this.subtitle});
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color _lightColor = Theme.of(context).primaryColorLight;
+    final Color _darkColor = Theme.of(context).primaryColorDark;
+    return Container(
+      margin: const EdgeInsets.all(Dime.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.all(Dime.PADDING_SIZE_LARGE),
+      width: Dime.SCREEN_WIDTH(context) * 0.8,
+      height: Dime.SCREEN_WIDTH(context) * 0.5,
+      decoration: BoxDecoration(
+        color: CustomColor.primaryColor,
+        borderRadius: BorderRadius.circular(
+          Dime.PADDING_SIZE_DEFAULT,
+        ),
+      ),
+      child: Column(children: [
+        Text(
+          title,
+          style: textStyleExtraLarge(context).copyWith(color: _lightColor),
+        ),
+        Text(
+          subtitle,
+          textAlign: TextAlign.center,
+          style: textStyleLarge(context).copyWith(
+            color: _lightColor,
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class SmallCard extends StatefulWidget {
+  const SmallCard({super.key});
+
+  @override
+  State<SmallCard> createState() => _SmallCardState();
+}
+
+class _SmallCardState extends State<SmallCard> {
+  bool isSelected = false;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isSelected = !isSelected;
+            });
+          },
+          child: Container(
+            margin: const EdgeInsets.all(2),
+            height: Dime.SCREEN_WIDTH(context) * 0.2,
+            width: Dime.SCREEN_WIDTH(context) * 0.2,
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? CustomColor.primaryColor
+                  : CustomColor.customGrey,
+              borderRadius: BorderRadius.circular(Dime.RADIUS_DEFAULT),
+            ),
+          ),
+        ),
+        Text(
+          "Wash & Iron",
+          style: textStyleDefault(context).copyWith(
+            fontWeight: Dime.FONT_WEIGHT_MEDIUM,
+          ),
+        )
+      ],
+    );
+  }
+}

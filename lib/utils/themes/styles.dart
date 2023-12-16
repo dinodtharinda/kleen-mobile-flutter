@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'colors.dart';
 
 import '../constant/dimensions.dart';
 
 TextStyle textStyleDefault(BuildContext context) {
   return TextStyle(
-     fontFamily: "Roboto",
-    fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
-    fontSize: Dimensions.R_FONT_SIZE_DEFAULT(context),
+    fontFamily: "Roboto",
+    fontWeight: Dime.FONT_WEIGHT_DEFAULT,
+    fontSize: Dime.R_FONT_SIZE_DEFAULT(context),
+  
   );
 }
-
 
 TextStyle textStyleSmall(BuildContext context) {
   return TextStyle(
-     fontFamily: "Roboto",
-    fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
-    fontSize: Dimensions.R_FONT_SIZE_SMALL(context),
+    fontFamily: "Roboto",
+    fontWeight: Dime.FONT_WEIGHT_DEFAULT,
+    fontSize: Dime.R_FONT_SIZE_SMALL(context),
+    
   );
 }
+
 TextStyle textStyleLarge(BuildContext context) {
   return TextStyle(
     fontFamily: "Roboto",
-    fontWeight: Dimensions.FONT_WEIGHT_DEFAULT,
-    fontSize: Dimensions.R_FONT_SIZE_LARGE(context),
+    fontWeight: Dime.FONT_WEIGHT_DEFAULT,
+    fontSize: Dime.R_FONT_SIZE_LARGE(context),
+    
   );
 }
 
-
+TextStyle textStyleExtraLarge(BuildContext context) {
+  return TextStyle(
+    fontFamily: "Roboto",
+    fontWeight: Dime.FONT_WEIGHT_EXTRA_LARGE,
+    fontSize: Dime.R_FONT_SIZE_EXTRA_LARGE(context),
+  
+  );
+}
 
 const customBoxShadow = BoxShadow(
   color: CustomColor.customGrey,
@@ -36,5 +47,10 @@ const customBoxShadow = BoxShadow(
   offset: Offset(0, 3), // changes position of shadow
 );
 
- Border customBorder = Border.all(width: 0.5, color: CustomColor.customGrey);
-              
+
+ NumberFormat formatCurrency = NumberFormat.currency(locale: 'en_US', symbol: 'LKR');
+  String formatPrice(double price) {
+    return formatCurrency.format(price);
+  }
+
+Border customBorder = Border.all(width: 0.5, color: CustomColor.customGrey);

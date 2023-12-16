@@ -1,6 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:kleen/utils/custom/app_custom_widgets.dart';
-
+import 'package:kleen/views/screens/home/home_screen.dart';
+import 'package:kleen/views/screens/map/map_screen.dart';
 import '../../../utils/constant/dimensions.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -12,58 +15,66 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int pageIndex = 0;
+  _setPage(int index) {
+    setState(() {
+      pageIndex = index;
+    });
+  }
 
-      
   @override
   Widget build(BuildContext context) {
-
-    _setPage(int index) {
-      setState(() {
-        pageIndex = index;
-      });
-    }
-    return  Scaffold(
-      appBar: const CustomAppBar(
-        leading: Icon(Icons.menu),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: CircleAvatar(),
-          )
+    return Scaffold(
+      body: IndexedStack(
+        index: pageIndex,
+        children: const [
+          HomeScreen(),
+          MapScreen()
         ],
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).primaryColorLight,
-        elevation: 5,
+        elevation: 0,
         notchMargin: 5,
         clipBehavior: Clip.antiAlias,
         shape: const CircularNotchedRectangle(),
         child: Padding(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          padding: const EdgeInsets.all(Dime.PADDING_SIZE_EXTRA_SMALL),
           child: Row(children: [
             BottomNavItem(
                 iconData: Icons.home,
                 isSelected: pageIndex == 0,
-                onTap: () => _setPage(0)),
+                onTap: () {
+                  print("Index 1");
+                  _setPage(0);
+                }),
             BottomNavItem(
-                iconData: Icons.favorite,
+                iconData: Icons.map,
                 isSelected: pageIndex == 1,
-                onTap: () => _setPage(1)),
-
+                onTap: () {
+                  print("Index 1");
+                  _setPage(1);
+                }),
             BottomNavItem(
-                iconData: Icons.shopping_cart,
+                iconData: Icons.shopping_basket,
                 isSelected: pageIndex == 2,
-                onTap: () => _setPage(2)),
-         
-      
+                onTap: () {
+                  print("Index 1");
+                  _setPage(2);
+                }),
             BottomNavItem(
                 iconData: Icons.shopping_bag,
                 isSelected: pageIndex == 3,
-                onTap: () => _setPage(3)),
+                onTap: () {
+                  print("Index 1");
+                  _setPage(3);
+                }),
             BottomNavItem(
                 iconData: Icons.menu,
                 isSelected: pageIndex == 4,
-                onTap: () {}),
+                onTap: () {
+                  print("Index 1");
+                  _setPage(4);
+                }),
           ]),
         ),
       ),
